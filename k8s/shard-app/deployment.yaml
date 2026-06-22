@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-shard
-  namesapce: demo-shard
 spec:
   replicas: 1
   selector:
