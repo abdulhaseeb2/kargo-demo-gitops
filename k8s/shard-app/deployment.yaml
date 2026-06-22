@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-shard
+  namesapce: demo-shard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-shard
+  template:
+    metadata:
+      labels:
+        app: demo-shard
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80

@@ -1,0 +1,17 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: shard
+  namespace: demo
+spec:
+  shard: shard-a
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: wh-shard
+    sources:
+      direct: true
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: fake-step

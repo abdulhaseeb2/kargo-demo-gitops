@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demo-nginx
-  namespace: demo
+  name: demo-main
+  namesapce: demo-main
 spec:
   selector:
-    app: demo-nginx
+    app: demo-main
   ports:
   - port: 80
     targetPort: 80
