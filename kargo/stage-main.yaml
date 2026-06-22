@@ -1,11 +1,16 @@
 apiVersion: kargo.akuity.io/v1alpha1
-kind: Warehouse
+kind: Stage
 metadata:
-  name: wh-shard
+  name: main
   namespace: demo
 spec:
-  shard: shard-a
-  subscriptions:
-  - image:
-      repoURL: nginx
-      semverConstraint: ^1.27.0
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: wh-main
+    sources:
+      direct: true
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: fake-step
