@@ -6,4 +6,4 @@ resources:
 - service.yaml
 images:
 - name: ghcr.io/stefanprodan/podinfo
-  newTag: 6.6.0
+  newTag: 6.14.0
