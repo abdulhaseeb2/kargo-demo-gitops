@@ -1,0 +1,12 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kargo-main
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30080 # main Argo CD
+    hostPort: 30080
+  - containerPort: 30081 # Kargo API
+    hostPort: 30081
+  - containerPort: 30082 # Kargo UI/API proxy
+    hostPort: 30082
