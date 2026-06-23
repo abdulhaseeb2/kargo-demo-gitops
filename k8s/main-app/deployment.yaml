@@ -13,7 +13,7 @@ spec:
         app: demo-main
     spec:
       containers:
-      - name: nginx
-        image: nginx
+      - name: podinfo
+        image: ghcr.io/stefanprodan/podinfo
         ports:
-        - containerPort: 80
+        - containerPort: 9898

@@ -4,7 +4,6 @@ resources:
 - namespace.yaml
 - deployment.yaml
 - service.yaml
-
 images:
-- name: nginx
-  newTag: "1.27.0"
+- name: ghcr.io/stefanprodan/podinfo
+  newTag: "6.6.0"
