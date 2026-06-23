@@ -1,6 +1,6 @@
 # Instructions
 
-Distributed Kargo lab on two kind clusters on your cloned GitOps repo
+Distributed Kargo lab to test sharding on two kind clusters on a GitOps repo.
 
 ## Prerequisites
 
@@ -33,17 +33,19 @@ Your gitops repository should have the following structure with the mentioned fi
 > - kargo/stage-main.yaml
 > - kargo/stage-shard.yaml
 
-## Clone Repo
+## Setting up the Repo
+
+We recommend forking the repo so that you can generate your own PAT and so that you are in control
 
 ```bash
-git clone https://github.com/<your-org>/<your-repo>.git
+git clone https://github.com/<your-org>/kargo-demo-gitops.git
 cd kargo-demo-gitops
 ```
 
 ## Environment variables
 
 ```bash
-export GITOPS_REPO_URL="https://github.com/<your-org>/<your-repo>.git"
+export GITOPS_REPO_URL="https://github.com/<your-org>/kargo-demo-gitops.git"
 export GITHUB_USERNAME="<your-username>"
 export GITHUB_PAT="<your-personal-access-token>"
 ```
@@ -51,8 +53,8 @@ export GITHUB_PAT="<your-personal-access-token>"
 ## Create main and shard clusters
 
 ```bash
-kind create cluster --config /manifests/kind-main.yaml
-kind create cluster --config /manifests/kind-shard.yaml
+kind create cluster --config manifests/kind-main.yaml
+kind create cluster --config manifests/kind-shard.yaml
 ```
 
 Verify
@@ -112,6 +114,8 @@ done
 Install cert-manager
 
 ```bash
+kubectl config use-context kind-kargo-main
+
 helm install cert-manager oci://quay.io/jetstack/charts/cert-manager \
   --version v1.20.2 \
   --namespace cert-manager \
@@ -124,8 +128,6 @@ helm install cert-manager oci://quay.io/jetstack/charts/cert-manager \
 Generate and save the Kargo UI password
 
 ```bash
-kubectl config use-context kind-kargo-main
-
 pass=$(openssl rand -base64 48 | tr -d "=+/" | head -c 32)
 hashed_pass=$(htpasswd -bnBC 10 "" "$pass" | tr -d ':\n')
 signing_key=$(openssl rand -base64 48 | tr -d "=+/" | head -c 32)
