@@ -7,5 +7,5 @@ spec:
   shard: shard-a
   subscriptions:
   - image:
-      repoURL: nginx
-      semverConstraint: ^1.27.0
+      repoURL: ghcr.io/stefanprodan/podinfo
+      semverConstraint: ^6.0.0

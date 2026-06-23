@@ -12,5 +12,39 @@ spec:
       direct: true
   promotionTemplate:
     spec:
+      vars:
+      - name: gitRepo
+        value: https://github.com/abdulhaseeb2/kargo-demo-gitops.git
+      - name: imageRepo
+        value: ghcr.io/stefanprodan/podinfo
+      - name: appPath
+        value: ./repo/k8s/main-app
       steps:
-      - uses: fake-step
+      - uses: git-clone
+        config:
+          repoURL: ${{ vars.gitRepo }}
+          checkout:
+          - branch: main
+            path: ./repo
+      - uses: kustomize-set-image
+        as: update-image
+        config:
+          path: ${{ vars.appPath }}
+          images:
+          - image: ${{ vars.imageRepo }}
+            tag: ${{ imageFrom(vars.imageRepo).Tag }}
+      - uses: git-commit
+        as: commit
+        config:
+          path: ./repo
+          message: ${{ outputs['update-image'].commitMessage }}
+      - uses: git-push
+        config:
+          path: ./repo
+      - uses: argocd-update
+        config:
+          apps:
+          - name: demo-main
+            sources:
+            - repoURL: ${{ vars.gitRepo }}
+              desiredRevision: ${{ outputs.commit.commit }}
