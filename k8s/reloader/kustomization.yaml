@@ -6,4 +6,4 @@ resources:
 - namespace.yaml
 images:
 - name: ghcr.io/stakater/reloader
-  newTag: v1.4.19
+  newTag: v1.4.18
